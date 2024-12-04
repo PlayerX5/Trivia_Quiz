@@ -25,6 +25,7 @@ def get_db_connection():
     )
     return conn
 
+# Function to fetch questions from the database
 def get_questions(difficulty):
     conn = get_db_connection()
     cur = conn.cursor()
@@ -67,10 +68,6 @@ def get_trivia():
     
     # Fetch a random question from the database based on difficulty
     formatted_questions = get_questions(difficulty)
-
-    # # Filter questions by difficulty
-    # filtered_questions = [q for q in formatted_questions if q['difficulty'] == difficulty]
-
     if not formatted_questions:
         return jsonify({"error": f"No questions found for difficulty level: {difficulty}."}), 404
 
@@ -81,12 +78,14 @@ def get_trivia():
     session['last_question_ids'] = [question['id']]
     session['difficulty'] = difficulty  # Store the difficulty in the session
 
+    # Manually structure the response to ensure the correct order: id, question, options
     response = OrderedDict([
         ("id", question["id"]),
         ("question", question["question"]),
         ("options", question["options"]),
     ])
     
+    # Return the formatted response with proper indentation
     return app.response_class(
         response=json.dumps(response, indent=4, ensure_ascii=False),
         mimetype='application/json'
@@ -97,23 +96,18 @@ def get_trivia():
 def get_multiple_questions():
     num_questions = request.args.get('num', default=1, type=int)  # Default to 1 question
     difficulty = request.args.get('difficulty', default='easy', type=str).lower()  # Default to 'easy'
-
-    # Ensure num_questions doesn't exceed the total number of available questions
-    if num_questions > len(get_questions):
-        return jsonify({"error": f"Only {len(get_questions)} questions are available."}), 400
     
     # Validate the difficulty input
     if difficulty not in ['easy', 'medium', 'hard']:
         return jsonify({"error": "Invalid difficulty level. Valid levels are 'easy', 'medium', and 'hard'."}), 400
 
-    # Filter questions by difficulty
-    filtered_questions = [q for q in get_questions if q['difficulty'] == difficulty]
-
-    if not filtered_questions:
+    # Fetch a random question from the database based on difficulty
+    formatted_questions = get_questions(difficulty)
+    if not formatted_questions:
         return jsonify({"error": f"No questions found for difficulty level: {difficulty}."}), 404
     
     # Randomly sample the questions
-    selected_questions = sample(filtered_questions, min(num_questions, len(filtered_questions)))
+    selected_questions = sample(formatted_questions, min(num_questions, len(formatted_questions)))
 
     # Store the IDs of the selected questions in the session for later validation
     session['last_question_ids'] = [q['id'] for q in selected_questions] # Store IDs in the session
@@ -127,6 +121,7 @@ def get_multiple_questions():
             ("options", q["options"]),
         ]) for q in selected_questions
     ]
+
     # Return the formatted response with proper indentation
     return app.response_class(
         response=json.dumps(response, indent=4, ensure_ascii=False),  # Add indent for pretty printing
