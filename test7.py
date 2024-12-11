@@ -155,4 +155,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-# Is able to Take number of questions from user, match the GET and POSt questions and show output in order
+# Is able to Take number of questions from user, match the GET and POST questions and show output in order
