@@ -86,6 +86,7 @@ def get_trivia():
         ("id", question["id"]),
         ("question", question["question"]),
         ("options", question["options"]),
+        ("answer", question["answer"]),
     ])
     
     # Return the formatted response with proper indentation
@@ -125,6 +126,7 @@ def get_multiple_questions():
             ("id", q["id"]),
             ("question", q["question"]),
             ("options", q["options"]),
+            ("answer", q["answer"]),
         ]) for q in selected_questions
     ]
 

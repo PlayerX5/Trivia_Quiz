@@ -1,124 +1,185 @@
-let questions = [];
-let selectedDifficulty = "";
-let answers = []; // To store selected answers for submission
+// Base URL for the trivia API
+const API_BASE_URL = "http://localhost:5000/api";
 
-// Show number of questions input after difficulty is selected
-function selectDifficulty(difficulty) {
+let currentQuestionIndex = 0;
+let numQuestions = 5;
+let questions = [];
+let score = 0;
+let quizStarted = false;
+let selectedDifficulty = "";
+
+// Function to handle difficulty selection
+function setSelectedDifficulty(difficulty) {
     selectedDifficulty = difficulty;
-    document.getElementById('difficulty-selector').style.display = 'none';
-    document.getElementById('num-questions-container').style.display = 'block';
-    console.log(`Selected Difficulty: ${selectedDifficulty}`); // Debugging the selected value
+    console.log(`Selected Difficulty: ${selectedDifficulty}`);
+
+    // Update the displayed difficulty on the page
+    const formattedDifficulty = selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1);
+    document.getElementById("difficulty-display").innerText = formattedDifficulty;
 }
 
-// Start the quiz
-function startQuiz() {
-    const numQuestions = document.getElementById('numQuestions').value;
-
-    if (!selectedDifficulty) { // Check if difficulty is selected
-        alert("Please select a difficulty level before starting the quiz.");
+// Function to start the quiz
+async function startQuiz() {
+    if (quizStarted) return; // Prevents duplicate execution
+    if (!selectedDifficulty) {
+        alert("Please select a difficulty level first!");
         return;
     }
-    
-    const normalizedDifficulty = selectedDifficulty.toLowerCase(); // Normalize to lowercase
-    const apiUrl = `http://127.0.0.1:5000/api/questions?difficulty=${normalizedDifficulty}&num=${numQuestions}`;
 
-    console.log(`API URL: ${apiUrl}`); // Debugging the API URL
+    quizStarted = true;
+    numQuestions = document.getElementById("numQuestions").value || 5;
+    console.trace("startQuiz called");
 
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                alert(data.error); // Show error from API
-                return;
-            }
-            questions = data;
-            displayAllQuestions();
-            document.getElementById('quiz-content').style.display = 'block';
-            document.getElementById('num-questions-container').style.display = 'none';
-        })
-        .catch(error => {
-            console.error('Error fetching questions:', error);
-            alert('Failed to load questions. Please try again later.');
-        });
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/questions?difficulty=${selectedDifficulty}&num=${numQuestions}`
+        );
+        if (!response.ok) {
+            throw new Error("Failed to fetch questions");
+        }
+
+        questions = await response.json();
+        console.log("Fetched Questions:", questions);
+
+        if (questions.length > 0) {
+            currentQuestionIndex = 0;
+            score = 0;
+            displayQuestions(); // Modified to show all questions at once
+            document.getElementById("quiz-content").style.display = "block";
+            document.getElementById("scorecard").style.display = "none";
+        } else {
+            alert("No questions available for the selected difficulty.");
+        }
+    } catch (error) {
+        console.error("Error:", error.message);
+        alert("Failed to fetch questions. Please try again later.");
+    }
 }
 
-// Display all questions at once
-function displayAllQuestions() {
-    const questionsContainer = document.getElementById('questions-container');
-    questionsContainer.innerHTML = ''; // Clear previous content
+// Function to display all questions at once
+function displayQuestions() {
+    const container = document.getElementById("questions-container");
+    container.innerHTML = ''; // Clear the container before rendering new questions
 
-    questions.forEach((question, questionIndex) => {
-        const questionEl = document.createElement('div');
-        questionEl.className = 'question-block';
-        questionEl.innerHTML = `
-            <div class="question">${questionIndex + 1}. ${question.question}</div>
+    questions.forEach((question, index) => {
+        const questionDiv = document.createElement("div");
+        questionDiv.className = "question-container mb-4";
+        questionDiv.innerHTML = `
+            <h4 style="font-weight: bold; font-size: 1.5rem;">Question ${index + 1}: ${question.question}</h4>
             <div class="options">
-                ${question.options
-                    .map(
-                        (option, index) => `
-                    <label>
-                        <input type="radio" name="question-${question.id}" value="${option}">
-                        ${option}
-                    </label>
-                `
-                    )
-                    .join('')}
+                ${question.options.map(option => {
+                    return `<button class="btn btn-outline-primary m-2" onclick="checkAnswer('${option}', ${index})">${option}</button>`;
+                }).join('')}
             </div>
         `;
-        questionsContainer.appendChild(questionEl);
+        container.appendChild(questionDiv);
     });
-
-    document.getElementById('submit-btn').style.display = 'block';
 }
 
-// Submit answers to the backend
-function submitAnswers() {
-    answers = [];
-    questions.forEach((question) => {
-        const selectedOption = document.querySelector(`input[name="question-${question.id}"]:checked`);
-        if (selectedOption) {
-            answers.push({
-                id: question.id,
-                answer: selectedOption.value,
-            });
-        }
+// Function to check the answer and update the score
+function checkAnswer(selectedOption, questionIndex) {
+    const correctAnswer = questions[questionIndex].answer;
+    const options = document.querySelectorAll(`#questions-container .question-container:nth-child(${questionIndex + 1}) .options button`);
+    
+    // Remove any existing classes from all options
+    options.forEach(optionButton => {
+        optionButton.classList.remove("selected", "correct", "incorrect");
     });
 
-    if (answers.length < questions.length) {
-        alert('Please answer all questions.');
-        return;
+    // Add the 'selected' class to the selected button
+    const selectedButton = Array.from(options).find(button => button.innerText === selectedOption);
+    selectedButton.classList.add("selected");
+
+    // Add 'correct' or 'incorrect' class to the buttons based on the answer
+    if (selectedOption === correctAnswer) {
+        selectedButton.classList.add("correct");
+    } else {
+        selectedButton.classList.add("incorrect");
+
+        // Highlight the correct answer if it was not selected
+        const correctButton = Array.from(options).find(button => button.innerText === correctAnswer);
+        correctButton.classList.add("correct");
     }
 
-    fetch('http://127.0.0.1:5000/api/answer', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ answers }),
-    })
-        .then(response => response.json())
-        .then(data => {
-            alert('Quiz submitted successfully!');
-            displayScorecard(); // Show the scorecard or success message
-        })
-        .catch(error => {
-            console.error('Error submitting answers:', error);
-            alert('Failed to submit answers. Please try again.');
-        });
+    // Log answer and update score
+    if (selectedOption === correctAnswer) {
+        score++;
+    }
+
+    console.log(
+        `Question: ${questions[questionIndex].question}, Selected: ${selectedOption}, Correct: ${correctAnswer}, Score: ${score}`
+    );
+
+    // Move to the next question or show the scorecard
+    if (questionIndex === questions.length - 1) {
+        showScorecard();
+    }
 }
 
-// Display scorecard (optional based on backend response)
-function displayScorecard() {
-    document.getElementById('quiz-content').style.display = 'none';
-    document.getElementById('scorecard').style.display = 'block';
-    document.getElementById('score').innerText = `${answers.length} / ${questions.length}`;
+// Function to display the scorecard
+function showScorecard() {
+    document.getElementById("quiz-content").style.display = "none";
+    document.getElementById("score").innerText = `${score} / ${questions.length}`;
+    document.getElementById("scorecard").style.display = "block";
 }
 
-// Restart the quiz
+// Function to restart the quiz
 function restartQuiz() {
-    document.getElementById('difficulty-selector').style.display = 'block';
+    // Reset quiz content and state
     document.getElementById('quiz-content').style.display = 'none';
     document.getElementById('scorecard').style.display = 'none';
+    document.getElementById('start-btn').style.display = 'block';
+
+    // Reset global state variables
+    currentQuestionIndex = 0;
+    score = 0;
+    quizStarted = false;
     questions = [];
-    answers = [];
+
+    // Clear questions display
+    document.getElementById('questions-container').innerHTML = "";
+
+    // Reinitialize event listeners for difficulty buttons
+    attachDifficultyEventListeners();
+    // Reset selected difficulty display
+    document.getElementById("difficulty-display").innerText = "None";
 }
+
+// Function to attach event listeners for difficulty buttons
+function attachDifficultyEventListeners() {
+    const easyButton = document.getElementById('easy-button');
+    const mediumButton = document.getElementById('medium-button');
+    const hardButton = document.getElementById('hard-button');
+    
+    if (easyButton) {
+        easyButton.addEventListener('click', function() {
+            setSelectedDifficulty('easy');
+        });
+    }
+    if (mediumButton) {
+        mediumButton.addEventListener('click', function() {
+            setSelectedDifficulty('medium');
+        });
+    }
+    if (hardButton) {
+        hardButton.addEventListener('click', function() {
+            setSelectedDifficulty('hard');
+        });
+    }
+}
+
+// Event listener for the "Start Quiz" button
+document.getElementById("start-btn").addEventListener("click", startQuiz);
+
+// Initial setup
+console.log("Quiz Script Loaded");
+
+// Wait for the DOM to load before attaching event listeners for difficulty selection
+document.addEventListener('DOMContentLoaded', function () {
+    attachDifficultyEventListeners(); // Attach event listeners for difficulty buttons
+
+    const restartButton = document.getElementById('restart-btn');
+    if (restartButton) {
+        restartButton.addEventListener('click', restartQuiz);
+    }
+});

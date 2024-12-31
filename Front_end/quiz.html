@@ -27,6 +27,7 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <!-- <link href="assets/css/quiz-style.css" rel="stylesheet"> -->
 
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
@@ -46,40 +47,45 @@
           <h1 class="sitename">TrivQui</h1>
         </a>
   
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="#quiz">Quiz</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-  
         <a class="btn-getstarted" href="front_page.html#quiz">Get Started</a>
   
       </div>
     </header>
 
     <section id="quiz" class="quiz-section">
+      <img src="assets/img/quiz-bg.jpg" alt="Background Image">
         <div class="container" data-aos="fade-up">
             <div class="section-header text-center">
                 <h2>Take the Quiz</h2>
-                <p>Select a difficulty level and number of questions to get started.</p>
+                <p class="intro-text">Select a difficulty level and number of questions to get started.</p>
             </div>
     
             <!-- Difficulty Selection -->
             <div class="difficulty-selector text-center">
-                <button class="btn btn-primary" onclick="selectedDifficulty('easy')">Easy</button>
-                <button class="btn btn-secondary" onclick="selectedDifficulty('medium')">Medium</button>
-                <button class="btn btn-danger" onclick="selectedDifficulty('hard')">Hard</button>
+                <button class="btn btn-primary" id="easy-button">Easy</button>
+                <button class="btn btn-secondary" id="medium-button">Medium</button>
+                <button class="btn btn-danger" id="hard-button">Hard</button>
+            </div>
+
+            <!-- Display the difficulty level -->
+            <div id="selected-difficulty" class="mt-3">
+              <p><strong>Selected Difficulty: </strong><span id="difficulty-display">None</span></p>
             </div>
     
             <!-- Input for selecting number of questions -->
-            <div>
+            <div class="form-group">
                 <label for="numQuestions">Enter Number of Questions:</label>
-                <input type="number" id="numQuestions" min="1" max="50" value="5" autocomplete="off">
+                <input type="number" id="numQuestions" min="1" max="10" value="5" autocomplete="off">
             </div>
     
             <!-- Button to start the quiz -->
             <button id="start-btn" class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
+
+            
+            <!-- Placeholder for displaying questions and options -->
+            <div id="questions-container" class="mt-4">
+              <!-- Questions will be inserted here dynamically -->
+            </div>
     
             <!-- Quiz Content -->
             <div id="quiz-content" class="quiz-content mt-5" style="display: none;">
@@ -88,9 +94,6 @@
     
                 <!-- Options -->
                 <div id="options" class="options"></div>
-    
-                <!-- Next Button -->
-                <button id="next-btn" class="btn btn-success mt-4" onclick="nextQuestion()" style="display: none;">Next</button>
             </div>
     
             <!-- Scorecard -->

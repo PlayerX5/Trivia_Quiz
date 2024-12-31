@@ -1384,3 +1384,164 @@ h3 {
 .contact .php-email-form button[type=submit]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
+
+
+/* Styles for the quiz options */
+
+.section-header h2 {
+  font-size: 50px;
+  font-weight: 500;
+  padding: 50px;
+  line-height: 1px;
+  letter-spacing: 1.5px;
+}
+
+.intro-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 25px;
+  color: #000000;
+}
+
+.btn {
+  font-family: 'Black Chancery', cursive;
+  font-size: 20px;  /* Adjust the font size as needed */
+}
+
+.selected {
+  background-color: #f0f8ff; /* Light blue for the selected answer */
+  border-color: #007bff;
+}
+
+.correct {
+  background-color: #28a745; /* Green for the correct answer */
+  border-color: #155724;
+  color: white;
+}
+
+.incorrect {
+  background-color: #dc3545; /* Red for the incorrect answer */
+  border-color: #721c24;
+  color: white;
+}
+
+/* Style for the buttons */
+button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+}
+
+button:hover {
+  background-color: #f8f9fa;
+}
+
+/* Style for the quiz container */
+
+/* The quiz content can have a slight opacity to contrast with the background */
+#quiz-content {
+  background-color: rgba(255, 255, 255, 0.9); /* Transparent white */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  text-align: center;
+}
+
+.quiz-section {
+  padding: 100px 0;
+  position: relative;
+  clip-path: inset(0);
+}
+
+.quiz-section img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  filter: brightness(50%) blur(2px);
+}
+
+.quiz-section:before {
+  content: "";
+  background: color-mix(in srgb, var(--background-color), transparent 80%);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.quiz-section .container {
+  position: relative;
+  z-index: 3;
+}
+
+#scorecard {
+  display: none;
+  text-align: center;
+}
+
+/* Container for each question */
+.question-container {
+  margin-bottom: 20px;
+}
+
+.question-container h4 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+/* Style for the difficulty display */
+#difficulty-display {
+  font-family: 'Black Chancery', cursive;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+  color: #000;
+}
+
+#selected-difficulty {
+  font-family: 'Black Chancery', cursive;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+label[for="numQuestions"] {
+  font-family: 'Black Chancery', cursive;
+  font-size: 20px;
+  color: #000;
+}
+
+/* Add some spacing between the options */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Style for the score display */
+#score {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Style for the restart button */
+#restart-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#restart-btn:hover {
+  background-color: #0056b3;
+}
