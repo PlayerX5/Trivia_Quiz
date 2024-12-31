@@ -8,11 +8,11 @@ from psycopg2 import sql
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
 app.secret_key = 'your_secret_key'  # Secret key for sessions
 
 # Configure server-side session storage
 app.config['SESSION_TYPE'] = 'filesystem'  # Store sessions on the server's filesystem
+CORS(app, supports_credentials=True)  # Enable CORS with credentials support
 app.config['SESSION_PERMANENT'] = False  # Sessions are not permanent
 Session(app)  # Initialize Flask-Session
 
@@ -33,7 +33,7 @@ def get_questions(difficulty):
     cur = conn.cursor()
 
     # Ensure difficulty is treated as a string
-    difficulty_str = str(difficulty)
+    difficulty_str = str(difficulty).lower()
 
     # Use the correct SQL query with a string comparison for difficulty
     cur.execute("SELECT * FROM questions WHERE difficulty = %s", (difficulty_str,))
@@ -42,7 +42,7 @@ def get_questions(difficulty):
     # Convert fetched data into a dictionary format similar to the original trivia_questions
     formatted_questions = []
     for row in questions:
-        print(row[2], type(row[2]))
+        # print(row[2], type(row[2]))
         formatted_questions.append({
             "id": row[0],  # Assuming the first column is the ID
             "question": row[1],
@@ -79,6 +79,7 @@ def get_trivia():
     # Store the question's ID in the session for later validation
     session['last_question_ids'] = [question['id']]
     session['difficulty'] = difficulty  # Store the difficulty in the session
+    app.logger.info(f"Selected question: {question}")  # Log only the selected question
 
     # Manually structure the response to ensure the correct order: id, question, options
     response = OrderedDict([
@@ -97,25 +98,28 @@ def get_trivia():
 @app.route('/api/questions', methods=['GET'])
 def get_multiple_questions():
     num_questions = request.args.get('num', default=1, type=int)  # Default to 1 question
-    difficulty = request.args.get('difficulty', default='easy', type=str).lower()  # Default to 'easy'
-    
+    difficulty = request.args.get('difficulty', default='easy', type=str).lower()  # Normalize to lowercase
+
+    app.logger.info(f"Received difficulty: {difficulty}, num_questions: {num_questions}")
+
     # Validate the difficulty input
     if difficulty not in ['easy', 'medium', 'hard']:
         return jsonify({"error": "Invalid difficulty level. Valid levels are 'easy', 'medium', and 'hard'."}), 400
 
-    # Fetch a random question from the database based on difficulty
+    # Fetch questions based on difficulty
     formatted_questions = get_questions(difficulty)
     if not formatted_questions:
         return jsonify({"error": f"No questions found for difficulty level: {difficulty}."}), 404
-    
-    # Randomly sample the questions
+
+    # Sample questions
     selected_questions = sample(formatted_questions, min(num_questions, len(formatted_questions)))
 
-    # Store the IDs of the selected questions in the session for later validation
-    session['last_question_ids'] = [q['id'] for q in selected_questions] # Store IDs in the session
-    session['difficulty'] = difficulty  # Store the difficulty in the session
+    # Store question IDs in the session
+    session['last_question_ids'] = [q['id'] for q in selected_questions]
+    session['difficulty'] = difficulty
+    app.logger.info(f"Selected question: {selected_questions}")  # Log only the selected question
 
-    # Manually structure the response to ensure the correct order: id, question, options
+    # Format the response
     response = [
         OrderedDict([
             ("id", q["id"]),
@@ -124,9 +128,8 @@ def get_multiple_questions():
         ]) for q in selected_questions
     ]
 
-    # Return the formatted response with proper indentation
     return app.response_class(
-        response=json.dumps(response, indent=4, ensure_ascii=False),  # Add indent for pretty printing
+        response=json.dumps(response, indent=4, ensure_ascii=False),
         mimetype='application/json'
     )
 
@@ -135,59 +138,53 @@ def get_multiple_questions():
 def check_answers():
     data = request.get_json()
     results = []
-    correct_count = 0  # Track correct answers
-    total_questions = 0  # Track total attempted questions
+    correct_count = 0
+    total_questions = 0
 
-    print("Received data:", data)  # Log the received data
-    print("Session data at start of /api/answer:", dict(session))
+    # Debug: Log the received data and session state
+    app.logger.info("Received data: %s", data)
+    app.logger.info("Session state: %s", dict(session))
 
     # Retrieve the last served question(s) IDs from the session
-    last_question_ids = session.get('last_question_ids')
-    difficulty = session.get('difficulty', 'easy')  # Default to 'easy' if not set
+    last_question_ids = session.get('last_question_ids', [])
+    difficulty = session.get('difficulty', 'easy')  # Default to 'easy'
 
-    print("Session at the start of /api/answer:", session)  # Log session data
-    print("Last Question IDs in session:", last_question_ids)  # Log session data
-
-    # Ensure the question IDs are valid
     if not last_question_ids:
         return jsonify({"error": "No question(s) have been served yet."}), 400
-    
-    # Fetch questions again based on difficulty (make sure this matches what was served)
+
+    # Fetch the previously served questions based on difficulty
     questions = get_questions(difficulty)
 
-    # Process each answer in the list
     for answer_data in data.get('answers', []):
-        question_id = answer_data.get('id')  # Extract `id` from the answer payload
+        question_id = answer_data.get('id')
         selected_option = answer_data.get('answer')
+        total_questions += 1
 
-        print(f"Processing answer for question ID {question_id} with selected option '{selected_option}'")
-        total_questions += 1  # Increment total questions count
-
-        # Check if the question ID matches the session data
+        # Validate the question ID
         if question_id not in last_question_ids:
-            results.append({"id": question_id, "error": "Question ID does not match any of the previously asked question IDs"})
+            results.append({"id": question_id, "error": "Question ID does not match any of the previously served question IDs"})
             continue
 
         # Find the question by ID
         trivia = next((q for q in questions if q['id'] == question_id), None)
         if not trivia:
-            # Add error if the question ID is invalid
             results.append({"id": question_id, "error": "Invalid question ID"})
             continue
 
-        # Check if the selected option is in the list of valid options
+        # Ensure options are in list form
+        trivia['options'] = trivia['options'].split(',') if isinstance(trivia['options'], str) else trivia['options']
+
+        # Validate the selected option
         if selected_option not in trivia['options']:
             results.append({"id": question_id, "error": "Invalid option"})
             continue
 
-        # Check if the selected option is correct
-        if trivia['answer'].lower() == selected_option.lower():
-            correct_count += 1  # Increment correct answers count
+        # Check if the selected answer is correct
+        if trivia['answer'].strip().lower() == selected_option.strip().lower():
+            correct_count += 1
             results.append({"id": question_id, "correct": True, "message": "Correct answer!"})
         else:
             results.append({"id": question_id, "correct": False, "message": "Wrong answer. Try again!"})
-
-    print("Results:", results)  # Log the results
 
     # Calculate the score
     score = {
@@ -198,7 +195,7 @@ def check_answers():
 
     return jsonify({
         "results": results,
-        "score": score  # Include the score in the response
+        "score": score
     })
 
 if __name__ == '__main__':

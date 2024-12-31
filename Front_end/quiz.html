@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Trivia Quiz API</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/tq.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+
+  <!-- Bootstrap Icons CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body class="index-page">
+
+    <header id="header" class="header d-flex align-items-center fixed-top">
+      <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+  
+        <a href="front_page.html" class="logo d-flex align-items-center me-auto me-lg-0">
+          <img src="assets/img/logo.png" alt="">
+          <h1 class="sitename">TrivQui</h1>
+        </a>
+  
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="#quiz">Quiz</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+  
+        <a class="btn-getstarted" href="front_page.html#quiz">Get Started</a>
+  
+      </div>
+    </header>
+
+    <section id="quiz" class="quiz-section">
+        <div class="container" data-aos="fade-up">
+            <div class="section-header text-center">
+                <h2>Take the Quiz</h2>
+                <p>Select a difficulty level and number of questions to get started.</p>
+            </div>
+    
+            <!-- Difficulty Selection -->
+            <div class="difficulty-selector text-center">
+                <button class="btn btn-primary" onclick="selectedDifficulty('easy')">Easy</button>
+                <button class="btn btn-secondary" onclick="selectedDifficulty('medium')">Medium</button>
+                <button class="btn btn-danger" onclick="selectedDifficulty('hard')">Hard</button>
+            </div>
+    
+            <!-- Input for selecting number of questions -->
+            <div>
+                <label for="numQuestions">Enter Number of Questions:</label>
+                <input type="number" id="numQuestions" min="1" max="50" value="5" autocomplete="off">
+            </div>
+    
+            <!-- Button to start the quiz -->
+            <button id="start-btn" class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
+    
+            <!-- Quiz Content -->
+            <div id="quiz-content" class="quiz-content mt-5" style="display: none;">
+                <!-- Question -->
+                <div id="question" class="question"></div>
+    
+                <!-- Options -->
+                <div id="options" class="options"></div>
+    
+                <!-- Next Button -->
+                <button id="next-btn" class="btn btn-success mt-4" onclick="nextQuestion()" style="display: none;">Next</button>
+            </div>
+    
+            <!-- Scorecard -->
+            <div id="scorecard" class="scorecard text-center mt-5" style="display: none;">
+                <h3>Quiz Completed!</h3>
+                <p>Your Score: <span id="score"></span></p>
+                <button class="btn btn-primary" onclick="restartQuiz()">Restart Quiz</button>
+            </div>
+        </div>
+    </section>     
+      
+        </main>
+      
+        <footer id="footer" class="footer dark-background">
+      
+            <!-- Logo Section -->
+            <div class="footer-logo text-center">
+              <a href="front_page.html" class="logo d-flex align-items-center justify-content-center">
+                <span>TrivQui</span>
+              </a>
+            </div>
+      
+          <div class="footer-top">
+            <div class="container">
+              <div class="row gy-4">
+                <div class="col-lg-4 col-md-6 footer-about">
+                  <div class="footer-contact pt-3">
+                    <p>Bangalore, Karnataka</p>
+                    <p class="mt-3"><strong>Phone:</strong> <span>+91 99999 99999</span></p>
+                    <p><strong>Email:</strong> <span>info@example.com</span></p>
+                  </div>
+                  <div class="social-links d-flex mt-4">
+                    <a href=""><i class="bi bi-twitter-x"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+      
+                <div class="col-lg-2 col-md-3 footer-links">
+                  <h4>Useful Links</h4>
+                  <ul>
+                    <li><i class="bi bi-chevron-right"></i> <a href="#home"> Home</a></li>
+                    <li><i class="bi bi-chevron-right"></i> <a href="#about"> About us</a></li>
+                    <li><i class="bi bi-chevron-right"></i> <a href="#quiz"> Quiz</a></li>
+                    <li><i class="bi bi-chevron-right"></i> <a href="#"> Terms of service</a></li>
+                    <li><i class="bi bi-chevron-right"></i> <a href="#"> Privacy policy</a></li>
+                  </ul>
+                </div>
+      
+                <div class="col-lg-4 col-md-12 footer-newsletter">
+                  <h4>Our Newsletter</h4>
+                  <p>Subscribe to our newsletter and receive the latest news about our Quizzes!</p>
+                  <form action="forms/newsletter.php" method="post" class="php-email-form">
+                    <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+                  </form>
+                </div>
+      
+              </div>
+            </div>
+          </div>
+      
+        </footer>
+      
+        <!-- Scroll Top -->
+        <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+      
+        <!-- Preloader -->
+        <div id="preloader"></div>
+      
+        <!-- Vendor JS Files -->
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/vendor/php-email-form/validate.js"></script>
+        <script src="assets/vendor/aos/aos.js"></script>
+        <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+        <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+        <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+      
+        <!-- Main JS File -->
+        <script src="assets/js/main.js"></script>
+        <!-- <script src="assets/js/triqui.js"></script> -->
+        <script src="assets/js/test.js"></script>
+        <script src="assets/js/no.js"></script>
+        <script src="assets/js/yes.js"></script>
+        <script src="assets/js/quiz.js"></script>
+</body>

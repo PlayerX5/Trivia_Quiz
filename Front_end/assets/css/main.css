@@ -187,6 +187,7 @@ h7 {
 .header .btn-getstarted:focus {
   color: var(--contrast-color);
   font-size: 14px;
+  font-family: "Black Chancery", cursive;
   padding: 8px 30px;
   margin: 0 0 0 30px;
   border-radius: 4px;
@@ -394,6 +395,7 @@ h7 {
   background-color: var(--background-color);
   font-size: 14px;
   position: relative;
+  padding: 40px 0;
 }
 
 .footer .footer-top {
@@ -401,27 +403,46 @@ h7 {
   background-color: color-mix(in srgb, var(--footer-background-color) 90%, white 10%);
 }
 
-.footer .footer-about .logo {
+/* .footer .footer-about .logo {
   line-height: 1;
+  font-weight: bold;
   margin-bottom: 10px;
-}
+} */
 
-.footer .footer-about .logo img {
+/* .footer .footer-about .logo img {
   max-height: 40px;
   margin-right: 6px;
+} */
+
+.footer-logo {
+  padding: 0 30px;
+  background-color: var(--footer-background-color); /* Optional: adjust if needed */
 }
 
-.footer .footer-about .logo span {
-  font-size: 26px;
+.footer-logo .logo {
+  font-size: 50px;
   font-weight: 700;
-  letter-spacing: 1px;
-  font-family: var(--heading-font);
+  font-family: 'Dancing Script', cursive;
   color: var(--heading-color);
+  text-align: center;
+}
+
+.footer-logo .logo span {
+  display: inline-block;
+  letter-spacing: 1px;
+}
+
+.footer-logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer-logo a:hover {
+  color: var(--accent-color);
 }
 
 .footer .footer-about p {
   font-size: 14px;
-  font-family: var(--heading-font);
 }
 
 .footer .social-links a {
@@ -444,15 +465,22 @@ h7 {
 }
 
 .footer h4 {
-  font-size: 16px;
+  font-size: 35px;
   font-weight: bold;
   position: relative;
   padding-bottom: 12px;
+  font-family: 'Dancing Script', cursive;
 }
 
 .footer .footer-links {
-  margin-bottom: 30px;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Horizontal centering */
+    justify-content: center; /* Vertical centering */
+    text-align: center; /* Optional: Align text in the center */
+    margin: 0 auto;
+    text-align: center; /* Center-align the text */
+  }
 
 .footer .footer-links ul {
   list-style: none;
@@ -489,12 +517,20 @@ h7 {
 
 .footer .footer-contact p {
   margin-bottom: 5px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+}
+
+.footer .footer-newsletter {
+  margin-left: auto;
+  margin-right: -70px; /* Push it towards the right */
 }
 
 .footer .footer-newsletter .newsletter-form {
   margin-top: 30px;
   margin-bottom: 15px;
   padding: 6px 8px;
+  margin-left: auto;
   position: relative;
   border-radius: 4px;
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
@@ -534,13 +570,13 @@ h7 {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
 }
 
-.footer .copyright {
+/* .footer .copyright {
   padding: 30px 0;
 }
 
 .footer .copyright p {
   margin-bottom: 0;
-}
+} */
 
 .footer .credits {
   margin-top: 5px;
@@ -1062,16 +1098,45 @@ section,
   border-radius: 8px;
 }
 
-.difficulty-section {
-  background-color: rgba(0, 0, 0, 0.6);
+.difficulty-section h3 {
+  font-size: 50px;
+  transition: color 0.3s ease; /* Smooth transition */
+  text-align: center; /* Ensures text alignment */
 }
 
-select {
-  background-color: #444;
-  color: white;
-  padding: 10px;
-  border: 1px solid #888;
-  border-radius: 4px;
+.difficulty-section:hover h3{
+  color: #8be591;
+}
+
+#difficulty-selector {
+  width: 100%; /* Full width */
+  padding: 10px; /* Add padding */
+  font-size: 30px; /* Adjust font size */
+  padding-left: 100px;
+  border-radius: 5px; /* Rounded corners */
+  background-color: #edf4ed; /* Background color */
+  color: var(--default-color); /* Text color */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+  appearance: none; /* Remove default arrow styles for consistency */
+  font-family: 'Dancing Script', cursive;
+  outline: none; /* Remove default focus outline */
+}
+
+#difficulty-selector:focus {
+  border-color: #edf4ed; /* Border color on focus */
+  box-shadow: 0 0 5px #edf4ed; /* Highlight effect on focus */
+  background-color: #edf4ed; /* Maintain the same background */
+  color: var(--default-color); /* Maintain text color */
+}
+
+#difficulty-selector option {
+  color: var(--default-color); /* Text color for options */
+  background-color: #edf4ed; /* Background for dropdown options */
+}
+
+#difficulty-selector:active {
+  background-color: #edf4ed; /* Override active background */
+  color: var(--default-color); /* Maintain text color */
 }
 
 button {
@@ -1093,33 +1158,77 @@ h3 {
 }
 
 #question-text {
-  font-size: 1.25rem;
+  font-size: 50px;
   color: white;
   margin-bottom: 20px;
+  text-align: center; /* Ensures text alignment */
 }
 
 #options-container {
   margin-top: 10px;
+  display: flex; /* Enables flexbox for alignment */
+  justify-content: center; /* Centers items horizontally */
+  align-items: center; /* Centers items vertically */
+  height: 100%; /* Ensures full height of container */
+  position: relative; /* Ensures "No" button is contained within its parent */
+  height: 150px; /* Adjust height as needed */
 }
 
 .option-button {
   width: 100%;
   margin-bottom: 10px;
-  background-color: #007bff;
+  background-color: #620764;
   color: white;
-  padding: 10px;
+  /* padding: 10px; */
   border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  /* cursor: pointer; */
+  padding: 10px 20px; /* Add padding for a better look */
+  font-size: 18px; /* Increase font size */
+  font-family: 'Dancing Script', cursive; /* Custom font */
+  cursor: pointer; /* Add a pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+}
+
+#option-yes {
+  background-color: #28a745; /* Green background */
+  color: white; /* White text */
+  position: relative; /* Static button, doesn't move */
+  transition: all 0.3s ease; /* Add a smooth transition for hover effects */
+}
+
+#option-yes:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#option-no {
+  background-color: #dc3545; /* Red background */
+  color: white; /* White text */
+  transition: all 0.3s ease; /* Smooth transition for better UX */
+  position: relative; /* Initially positioned relative to its container */
+  z-index: 10; /* Ensure it stays on top when moving */
+
+}
+
+#option-no:hover {
+  background-color: #c82333; /* Darker red on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 .option-button:hover {
-  background-color: #0056b3;
+  background-color: #620764;
 }
 
 /*--------------------------------------------------------------
 # Team Section
 --------------------------------------------------------------*/
+
+.team .container h3 {
+  font-size: 75px;
+  font-weight: 700;
+  color: #354410;
+}
+
 .team .team-member {
   background-color: var(--surface-color);
   overflow: hidden;
@@ -1173,14 +1282,17 @@ h3 {
 .team .team-member .member-info h4 {
   font-weight: 700;
   margin-bottom: 5px;
-  font-size: 18px;
+  font-size: 30px;
+  color: color-mix(in srgb, #202c02, transparent 40%);
 }
 
 .team .team-member .member-info span {
   display: block;
-  font-size: 13px;
+  font-size: 20px;
   font-weight: 400;
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  font-family: "Dancing Script", cursive; /* Replace with desired font */
+  font-style: italic; /* Optional: Make it italic */
+  color: color-mix(in srgb, #23043e, transparent 40%);
 }
 
 .team .team-member:hover .social {
@@ -1193,6 +1305,12 @@ h3 {
 --------------------------------------------------------------*/
 .contact .info-item+.info-item {
   margin-top: 40px;
+}
+
+.contact .container h3 {
+  font-size: 75px;
+  font-weight: 700;
+  color: #354410;
 }
 
 .contact .info-item i {
@@ -1211,7 +1329,7 @@ h3 {
 
 .contact .info-item h3 {
   padding: 0;
-  font-size: 18px;
+  font-size: 40px;
   font-weight: 700;
   margin-bottom: 5px;
 }
@@ -1247,10 +1365,14 @@ h3 {
 .contact .php-email-form input[type=text]::placeholder,
 .contact .php-email-form input[type=email]::placeholder,
 .contact .php-email-form textarea::placeholder {
+  font-family: "Black Chancery", cursive; /* Replace with desired font */
+  font-size: 20px;
   color: color-mix(in srgb, var(--default-color), transparent 70%);
 }
 
 .contact .php-email-form button[type=submit] {
+  font-family: "Black Chancery", cursive; /* Replace with desired font */
+  font-size: 20px;
   color: var(--contrast-color);
   background: var(--accent-color);
   border: 0;
@@ -1261,11 +1383,4 @@ h3 {
 
 .contact .php-email-form button[type=submit]:hover {
   background: color-mix(in srgb, var(--accent-color), transparent 20%);
-}
-
-/*--------------------------------------------------------------
-# Starter Section Section
---------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
 }
