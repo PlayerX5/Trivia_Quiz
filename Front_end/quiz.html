@@ -9,8 +9,8 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/tq.png" rel="apple-touch-icon">
+  <link href="static/img/favicon.png" rel="icon">
+  <link href="static/img/tq.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -19,15 +19,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="static/vendor/aos/aos.css" rel="stylesheet">
+  <link href="static/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="static/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
-  <!-- <link href="assets/css/quiz-style.css" rel="stylesheet"> -->
+  <link href="static/css/main.css" rel="stylesheet">
+  <!-- <link href="static/css/quiz-style.css" rel="stylesheet"> -->
 
   <!-- Swiper CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
@@ -43,7 +43,7 @@
       <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
   
         <a href="front_page.html" class="logo d-flex align-items-center me-auto me-lg-0">
-          <img src="assets/img/logo.png" alt="">
+          <img src="static/img/logo.png" alt="">
           <h1 class="sitename">TrivQui</h1>
         </a>
   
@@ -53,7 +53,7 @@
     </header>
 
     <section id="quiz" class="quiz-section">
-      <img src="assets/img/quiz-bg.jpg" alt="Background Image">
+      <img src="static/img/quiz-bg.jpg" alt="Background Image">
         <div class="container" data-aos="fade-up">
             <div class="section-header text-center">
                 <h2>Take the Quiz</h2>
@@ -100,6 +100,7 @@
             <div id="scorecard" class="scorecard text-center mt-5" style="display: none;">
                 <h3>Quiz Completed!</h3>
                 <p>Your Score: <span id="score"></span></p>
+                <p>Your Result: <span id="results"></span></p>
                 <button class="btn btn-primary" onclick="restartQuiz()">Restart Quiz</button>
             </div>
         </div>
@@ -168,20 +169,20 @@
         <div id="preloader"></div>
       
         <!-- Vendor JS Files -->
-        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/vendor/php-email-form/validate.js"></script>
-        <script src="assets/vendor/aos/aos.js"></script>
-        <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-        <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-        <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-        <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-        <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+        <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="static/vendor/php-email-form/validate.js"></script>
+        <script src="static/vendor/aos/aos.js"></script>
+        <script src="static/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="static/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="static/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+        <script src="static/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+        <script src="static/vendor/purecounter/purecounter_vanilla.js"></script>
       
         <!-- Main JS File -->
-        <script src="assets/js/main.js"></script>
-        <!-- <script src="assets/js/triqui.js"></script> -->
-        <script src="assets/js/test.js"></script>
-        <script src="assets/js/no.js"></script>
-        <script src="assets/js/yes.js"></script>
-        <script src="assets/js/quiz.js"></script>
+        <script src="static/js/main.js"></script>
+        <!-- <script src="static/js/triqui.js"></script> -->
+        <script src="static/js/test.js"></script>
+        <script src="static/js/no.js"></script>
+        <script src="static/js/yes.js"></script>
+        <script src="static/js/quiz.js"></script>
 </body>

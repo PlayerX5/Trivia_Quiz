@@ -6,8 +6,13 @@ from flask_session import Session  # Import Flask-Session
 import psycopg2
 from psycopg2 import sql
 from flask_cors import CORS
+from flask import Flask, send_from_directory
+import os
+from flask_sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
+from urllib.parse import urlparse
+
+app = Flask(__name__, static_folder='Front_end', static_url_path='')
 app.secret_key = 'your_secret_key'  # Secret key for sessions
 
 # Configure server-side session storage
@@ -22,10 +27,21 @@ def get_db_connection():
         dbname="Trivia", 
         user="postgres", 
         password="password", 
-        host="localhost", 
+        host="db", 
         port="5432"
     )
     return conn
+
+DB_HOST = "triviadb.cf8ukqkga47d.ap-south-2.rds.amazonaws.com"
+DB_NAME = "triviadb"
+DB_USER = "triviaquiz"
+DB_PASS = "Triviaquiz"
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
 
 # Function to fetch questions from the database
 def get_questions(difficulty):
@@ -200,8 +216,17 @@ def check_answers():
         "score": score
     })
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# Route to serve the homepage (front_page.html)
+@app.route('/')
+def home():
+    return send_from_directory('Front_end', 'front_page.html')
 
+# Route to serve the quiz page (quiz.html) with API integration
+@app.route('/quiz')
+def quiz():
+    return send_from_directory('Front_end', 'quiz.html')
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
 
 # Connected with the database.

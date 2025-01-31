@@ -1,0 +1,34 @@
+services:
+  # Flask API service
+  api:
+    build: .
+    container_name: trivia-api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/Trivia
+
+  # PostgreSQL service (official postgres image)
+  db:
+    image: postgres:latest  # Use the official postgres image from Docker Hub
+    container_name: trivia-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: Trivia
+    volumes:
+      - ./trivia_backup.sql:/docker-entrypoint-initdb.d/trivia_backup.sql
+    ports:
+      - "5432:5432"
+
+  # Front-end service (Nginx or static files serving)
+  frontend:
+    build:
+      context: ./Front_end
+      dockerfile: Dockerfile
+    container_name: trivia-frontend
+
+volumes:
+  trivia-db-data:  # Declare the volume for PostgreSQL data

@@ -1,0 +1,1557 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap');
+/* Fonts */
+:root {
+  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Raleway",  sans-serif;
+  --nav-font: "Poppins",  sans-serif;
+}
+
+@font-face {
+  font-family: 'Black Chancery';
+  src: url('fonts/BlackChancery.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
+:root { 
+  --background-color: #98e4d9; /* Background color for the entire website, including individual sections */
+  --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #151515; /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #7B904B; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
+  --contrast-color: #312f2f; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
+}
+
+/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
+:root {
+  --nav-color: rgba(255, 255, 255, 0.905);  /* The default color of the main navmenu links */
+  --nav-hover-color: #af69ed; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
+}
+
+/* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
+
+.light-background {
+  --background-color: #f9f9f9;
+  --surface-color: #ffffff;
+}
+
+.dark-background {
+  --background-color: #060606;
+  --default-color: #ffffff;
+  --heading-color: #ffffff;
+  --surface-color: #252525;
+  --contrast-color: #2a2727;
+}
+
+/* Smooth scroll */
+:root {
+  scroll-behavior: smooth;
+}
+
+/*--------------------------------------------------------------
+# General Styling & Shared Classes
+--------------------------------------------------------------*/
+body {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  font-family: var(--default-font);
+}
+
+a {
+  color: var(--accent-color);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: color-mix(in srgb, var(--nav-hover-color), transparent 25%);
+  text-decoration: none;
+}
+
+h1,
+h4,
+h5,
+h6 {
+  color: var(--heading-color);
+  font-family: var(--heading-font);
+  font-family: 'Dancing Script', cursive;
+}
+
+h2 {
+  color: var(--heading-color);
+  font-family: 'Black Chancery', cursive;
+}
+
+h3 {
+  color: var(--heading-color);
+  font-family: 'Tangerine', cursive;
+}
+
+h7 {
+  color: var(--heading-color);
+  font-family: italic;
+}
+
+/* PHP Email Form Messages
+------------------------------*/
+.php-email-form .error-message {
+  display: none;
+  background: #df1529;
+  color: #ffffff;
+  text-align: left;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.php-email-form .sent-message {
+  display: none;
+  color: #ffffff;
+  background: #059652;
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+  font-weight: 600;
+}
+
+.php-email-form .loading {
+  display: none;
+  background: var(--surface-color);
+  text-align: center;
+  padding: 15px;
+  margin-bottom: 24px;
+}
+
+.php-email-form .loading:before {
+  content: "";
+  display: inline-block;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 0 10px -6px 0;
+  border: 3px solid var(--accent-color);
+  border-top-color: var(--surface-color);
+  animation: php-email-form-loading 1s linear infinite;
+}
+
+@keyframes php-email-form-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*--------------------------------------------------------------
+# Global Header
+--------------------------------------------------------------*/
+.header {
+  --background-color: rgba(0, 0, 0, 0.8);
+  --heading-color: #ffffff;
+  --contrast-color: #ffffff;
+  color: var(--default-color);
+  background-color: var(--background-color);
+  padding: 10px 0;
+  transition: all 0.5s;
+  z-index: 997;
+}
+
+.header .logo {
+  line-height: 1;
+}
+
+.header .logo img {
+  max-height: 36px;
+  margin-left: -80px;
+  margin-right: 10px;
+}
+
+.header .logo h1 {
+  font-size: 32px;
+  margin: 0;
+  font-weight: 700;
+  color: var(--heading-color);
+}
+
+.header .logo span {
+  color: var(--accent-color);
+  font-size: 32px;
+}
+
+.header .btn-getstarted,
+.header .btn-getstarted:focus {
+  color: var(--contrast-color);
+  font-size: 14px;
+  font-family: "Black Chancery", cursive;
+  padding: 8px 30px;
+  margin: 0 0 0 30px;
+  border-radius: 4px;
+  transition: 0.3s;
+  border: 2px solid var(--accent-color);
+}
+
+.header .btn-getstarted:hover,
+.header .btn-getstarted:focus:hover {
+  color: var(--default-color);
+  background: var(--accent-color);
+}
+
+@media (max-width: 1200px) {
+  .header .logo {
+    order: 1;
+  }
+
+  .header .btn-getstarted {
+    order: 2;
+    margin: 0 15px 0 0;
+    padding: 6px 15px;
+  }
+
+  .header .navmenu {
+    order: 3;
+  }
+}
+
+.scrolled .header {
+  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Index Page Header
+------------------------------*/
+.index-page .header {
+  --background-color: rgba(0, 0, 0, 0);
+}
+
+/* Index Page Header on Scroll
+------------------------------*/
+.index-page.scrolled .header {
+  --background-color: rgba(0, 0, 0, 0.8);
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/* Navmenu - Desktop */
+@media (min-width: 1200px) {
+  .navmenu {
+    padding: 0;
+  }
+
+  .navmenu ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    list-style: none;
+    align-items: center;
+    padding-left: 500px; /* Adjust as needed */
+  }
+
+  .navmenu li {
+    position: relative;
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: var(--nav-color);
+    padding: 18px 15px;
+    font-size: 25px;
+    font-family: 'Dancing Script', cursive;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+
+  .navmenu a i,
+  .navmenu a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+    transition: 0.3s;
+  }
+
+  .navmenu li:last-child a {
+    padding-right: 0;
+  }
+
+  .navmenu li:hover>a {
+    color: var(--nav-hover-color);
+  }
+}
+
+/* Navmenu - Mobile */
+@media (max-width: 1199px) {
+  .mobile-nav-toggle {
+    color: var(--nav-color);
+    font-size: 28px;
+    line-height: 0;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .navmenu {
+    padding: 0;
+    z-index: 9997;
+  }
+
+  .navmenu ul {
+    display: none;
+    list-style: none;
+    position: absolute;
+    inset: 60px 20px 20px 20px;
+    padding: 10px 0;
+    margin: 0;
+    border-radius: 6px;
+    background-color: var(--nav-mobile-background-color);
+    overflow-y: auto;
+    transition: 0.3s;
+    z-index: 9998;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .navmenu a,
+  .navmenu a:focus {
+    color: var(--nav-dropdown-color);
+    padding: 10px 20px;
+    font-family: var(--nav-font);
+    font-size: 17px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+
+  .navmenu a i,
+  .navmenu a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.3s;
+    background-color: color-mix(in srgb, var(--nav-hover-color), white 90%);
+  }
+
+  .navmenu a i:hover,
+  .navmenu a:focus i:hover {
+    background-color: color-mix(in srgb, var(--nav-hover-color), white 90%);
+  }
+
+  .navmenu a:hover {
+    background-color: var(--nav-dropdown-hover-color);
+  }
+
+  .navmenu .active i,
+  .navmenu .active:focus i {
+    transform: rotate(180deg);
+  }
+
+  .mobile-nav-active {
+    overflow: hidden;
+  }
+
+  .mobile-nav-active .mobile-nav-toggle {
+    color: #fff;
+    position: absolute;
+    font-size: 32px;
+    top: 15px;
+    right: 15px;
+    margin-right: 0;
+    z-index: 9999;
+  }
+
+  .mobile-nav-active .navmenu {
+    position: fixed;
+    overflow: hidden;
+    inset: 0;
+    background: rgba(33, 37, 41, 0.8);
+    transition: 0.3s;
+  }
+
+  .mobile-nav-active .navmenu>ul {
+    display: block;
+  }
+}
+
+/*--------------------------------------------------------------
+# Global Footer
+--------------------------------------------------------------*/
+.footer {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  font-size: 14px;
+  position: relative;
+  padding: 40px 0;
+}
+
+.footer .footer-top {
+  padding: 50px 0;
+  background-color: color-mix(in srgb, var(--footer-background-color) 90%, white 10%);
+}
+
+/* .footer .footer-about .logo {
+  line-height: 1;
+  font-weight: bold;
+  margin-bottom: 10px;
+} */
+
+/* .footer .footer-about .logo img {
+  max-height: 40px;
+  margin-right: 6px;
+} */
+
+.footer-logo {
+  padding: 0 30px;
+  background-color: var(--footer-background-color); /* Optional: adjust if needed */
+}
+
+.footer-logo .logo {
+  font-size: 50px;
+  font-weight: 700;
+  font-family: 'Dancing Script', cursive;
+  color: var(--heading-color);
+  text-align: center;
+}
+
+.footer-logo .logo span {
+  display: inline-block;
+  letter-spacing: 1px;
+}
+
+.footer-logo a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.footer-logo a:hover {
+  color: var(--accent-color);
+}
+
+.footer .footer-about p {
+  font-size: 14px;
+}
+
+.footer .social-links a {
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  background-color: color-mix(in srgb, var(--default-color) 5%, white 10%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-right: 10px;
+  transition: 0.3s;
+}
+
+.footer .social-links a:hover {
+  color: var(--contrast-color);
+  background-color: var(--nav-hover-color);
+}
+
+.footer h4 {
+  font-size: 35px;
+  font-weight: bold;
+  position: relative;
+  padding-bottom: 12px;
+  font-family: 'Dancing Script', cursive;
+}
+
+.footer .footer-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Horizontal centering */
+    justify-content: center; /* Vertical centering */
+    text-align: center; /* Optional: Align text in the center */
+    margin: 0 auto;
+    text-align: center; /* Center-align the text */
+  }
+
+.footer .footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer .footer-links ul i {
+  margin-right: 4px;
+  font-size: 12px;
+  line-height: 0;
+  color: var(--accent-color);
+}
+
+.footer .footer-links ul li {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.footer .footer-links ul li:first-child {
+  padding-top: 0;
+}
+
+.footer .footer-links ul a {
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  display: inline-block;
+  line-height: 1;
+}
+
+.footer .footer-links ul a:hover {
+  color: var(--accent-color);
+}
+
+.footer .footer-contact p {
+  margin-bottom: 5px;
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+}
+
+.footer .footer-newsletter {
+  margin-left: auto;
+  margin-right: -70px; /* Push it towards the right */
+}
+
+.footer .footer-newsletter .newsletter-form {
+  margin-top: 30px;
+  margin-bottom: 15px;
+  padding: 6px 8px;
+  margin-left: auto;
+  position: relative;
+  border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
+  display: flex;
+  background-color: color-mix(in srgb, var(--footer-background-color) 90%, white 15%);
+  transition: 0.3s;
+}
+
+.footer .footer-newsletter .newsletter-form:focus-within {
+  border-color: var(--accent-color);
+}
+
+.footer .footer-newsletter .newsletter-form input[type=email] {
+  border: 0;
+  padding: 4px;
+  width: 100%;
+  background-color: color-mix(in srgb, var(--footer-background-color) 90%, white 15%);
+  color: var(--default-color);
+}
+
+.footer .footer-newsletter .newsletter-form input[type=email]:focus-visible {
+  outline: none;
+}
+
+.footer .footer-newsletter .newsletter-form input[type=submit] {
+  border: 0;
+  font-size: 16px;
+  padding: 0 20px;
+  margin: -7px -8px -7px 0;
+  background: var(--accent-color);
+  color: var(--contrast-color);
+  transition: 0.3s;
+  border-radius: 0 4px 4px 0;
+}
+
+.footer .footer-newsletter .newsletter-form input[type=submit]:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+/* .footer .copyright {
+  padding: 30px 0;
+}
+
+.footer .copyright p {
+  margin-bottom: 0;
+} */
+
+.footer .credits {
+  margin-top: 5px;
+  font-size: 13px;
+}
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  overflow: hidden;
+  background: #000;
+  transition: all 0.6s ease-out;
+}
+
+#preloader:before {
+  content: "";
+  position: fixed;
+  top: calc(50% - 30px);
+  left: calc(50% - 30px);
+  border: 6px solid #ffffff;
+  border-color: var(--accent-color) transparent var(--accent-color) transparent;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: animate-preloader 1.5s linear infinite;
+}
+
+@keyframes animate-preloader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*--------------------------------------------------------------
+# Scroll Top Button
+--------------------------------------------------------------*/
+.scroll-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 15px;
+  bottom: 15px;
+  z-index: 99999;
+  background-color: var(--accent-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  transition: all 0.4s;
+}
+
+.scroll-top i {
+  font-size: 24px;
+  color: var(--contrast-color);
+  line-height: 0;
+}
+
+.scroll-top:hover {
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+  color: var(--contrast-color);
+}
+
+.scroll-top.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Disable aos animation delay on mobile devices
+--------------------------------------------------------------*/
+@media screen and (max-width: 768px) {
+  [data-aos-delay] {
+    transition-delay: 0 !important;
+  }
+}
+
+/*--------------------------------------------------------------
+# Global Page Titles & Breadcrumbs
+--------------------------------------------------------------*/
+.page-title {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  position: relative;
+}
+
+.page-title .heading {
+  padding: 80px 0;
+  border-top: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+}
+
+.page-title .heading h1 {
+  font-size: 38px;
+  font-weight: 700;
+}
+
+.page-title nav {
+  background-color: color-mix(in srgb, var(--default-color), transparent 95%);
+  padding: 20px 0;
+}
+
+.page-title nav ol {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.page-title nav ol li+li {
+  padding-left: 10px;
+}
+
+.page-title nav ol li+li::before {
+  content: "/";
+  display: inline-block;
+  padding-right: 10px;
+  color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+/*--------------------------------------------------------------
+# Global Sections
+--------------------------------------------------------------*/
+section,
+.section {
+  color: var(--default-color);
+  background-color: var(--background-color);
+  padding: 60px 0;
+  scroll-margin-top: 80px;
+  overflow: clip;
+}
+
+@media (max-width: 1199px) {
+
+  section,
+  .section {
+    scroll-margin-top: 58px;
+  }
+}
+
+/*--------------------------------------------------------------
+# Global Section Titles
+--------------------------------------------------------------*/
+.section-title {
+  padding-bottom: 60px;
+  position: relative;
+}
+
+.section-title h2 {
+  font-size: 20px;
+  font-weight: 500;
+  padding: 0;
+  line-height: 1px;
+  margin: 0;
+  letter-spacing: 1.5px;
+  /* text-transform: uppercase; */
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  position: relative;
+}
+
+.section-title h2::after {
+  content: "";
+  width: 120px;
+  height: 1px;
+  display: inline-block;
+  background: var(--accent-color);
+  margin: 4px 10px;
+}
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+.hero {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  padding: 120px 0 80px 0;
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.hero img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero:before {
+  content: "";
+  background: color-mix(in srgb, var(--background-color), transparent 30%);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.hero .container {
+  position: relative;
+  z-index: 3;
+}
+
+.hero h2 {
+  margin: 0;
+  font-size: 56px;
+  font-weight: 700;
+  font-family: var(--nav-font);
+  font-family: 'Dancing Script', cursive;
+}
+
+.hero h2 span {
+  color: var(--accent-color);
+}
+
+.hero p {
+  margin: 10px 0 0 0;
+  font-size: 24px;
+  color: color-mix(in srgb, var(--default-color), transparent 30%);
+}
+
+.hero .icon-box {
+  padding: 30px 20px;
+  transition: ease-in-out 0.3s;
+  /* border: 1px solid color-mix(in srgb, var(--default-color), transparent 70%); */
+  height: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px; /* Adds space above the entire icon box */
+  position: relative; /* Or absolute if needed */
+  top: 50px; /* Adjust this value to move it upwards */
+  transform: translateY(-50px); /* Alternative: For smoother adjustments */
+}
+
+.hero .icon-box i {
+  font-size: 32px;
+  line-height: 1;
+  color: var(--accent-color);
+}
+
+.hero .icon-box h3 {
+  font-weight: 700;
+  margin: 10px 0 0 0;
+  padding: 0;
+  line-height: 1;
+  font-size: 50px;
+  line-height: 20px;
+}
+
+.hero .icon-box h3 a {
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  transition: ease-in-out 0.3s;
+}
+
+.hero .icon-box:hover {
+  border-color: var(--nav-hover-color);
+}
+
+.hero .icon-box:hover h3 a {
+  color: var(--nav-hover-color);
+}
+
+.hero .weather-box {
+  width: 50%; /* Adjust as needed */
+  height: 400px; 
+  background-color: rgba(255, 255, 255, 0.193);
+  padding: 30px;
+  border-radius: 20px;
+  position: relative;
+  margin-top: 20px; /* Spacing from quote box */
+  left: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Dancing Scipt', cursive;
+  text-align: left;
+  overflow: hidden;
+  display: flex; /* Enable flexbox */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: center; /* Vertically center the content */
+  text-align: center; /* Ensure text is centered within each paragraph */
+}
+
+.hero .weather-box .weather-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Makes sure the image covers the entire box */
+  z-index: -1; /* Ensures the text is above the image */
+}
+
+.hero .weather-box h6 {
+  font-weight: 700;
+  margin: 0;
+  padding: 50px;
+  line-height: 1;
+  font-size: 50px;
+  line-height: 20px;
+}
+
+.hero .weather-box h6 a {
+  color: color-mix(in srgb, #000000, transparent 20%);
+  transition: ease-in-out 0.3s;
+}
+
+.hero .weather-box:hover {
+  border-color: var(--nav-hover-color);
+}
+
+.hero .weather-box:hover h6 a {
+  color: var(--accent-color);
+}
+
+.weather-box p {
+  margin: 5px 0; /* Add some space between the paragraphs */
+  transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.weather-box p:hover {
+  color: #FFD700; /* Change text color to gold when hovered */
+  transform: scale(1.02); /* Slightly enlarge the text */
+}
+
+.hero .weather-box .content p {
+  margin: 10px 0; /* Add space between paragraphs */
+  font-size: 18px; /* Adjust font size */
+}
+
+#location, #temperature, #condition {
+  font-family: 'Tangerine', cursive; /* Use custom font */
+  font-size: 50px; /* Adjust font size */
+  font-weight: bold; /* Make the font bold */
+  line-height: 1.5; /* Adjust line height for spacing */
+  letter-spacing: 1px; /* Adjust letter spacing */
+  color: rgb(0, 0, 0); /* Text color */
+}
+
+
+.hero .icon-box h7 {
+  align-self: flex-end; /* Aligns the h7 to the right */
+  width: 100%; /* Ensures it stretches within the container */
+  text-align: right; /* Align text inside h7 to the right */
+}
+
+.hero .icon-box h7 a {
+  font-size: 25px;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  transition: ease-in-out 0.3s;
+  justify-content: flex-end; /* Aligns the content to the right */
+  display: block; /* Ensures the alignment takes effect */
+}
+
+.hero .icon-box:hover h7 a {
+  color: var(--accent-color);
+}
+
+.hero .swiper-slide img:hover {
+  filter: none;
+  opacity: 1;
+}
+
+.hero .swiper-wrapper {
+  height: auto;
+}
+
+.hero .swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+}
+
+.hero .swiper-pagination .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  opacity: 0;  /* Here lies the line for the bullets */
+  background-color: color-mix(in srgb, #ea0f92, transparent 80%);
+}
+
+.hero .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: var(--accent-color);
+}
+
+.hero .swiper-pagination .swiper-pagination-bullet:hover {
+  background-color: #636B2F;
+}
+
+@media (max-width: 768px) {
+  .hero h2 {
+    font-size: 32px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+}
+
+/*--------------------------------------------------------------
+# About Section
+--------------------------------------------------------------*/
+.about .content h3 {
+  font-size: 75px;
+  font-weight: 700;
+  color: #354410;
+}
+
+.about .content .fst-italic {
+  color: color-mix(in srgb, var(--default-color), var(--contrast-color) 50%);
+}
+
+.about .content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about .content ul li {
+  padding: 10px 0 0 0;
+  display: flex;
+}
+
+.about .content ul i {
+  color: var(--accent-color);
+  margin-right: 0.5rem;
+  line-height: 1.2;
+  font-size: 1.25rem;
+}
+
+.about .content p:last-child {
+  margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# Features Section
+--------------------------------------------------------------*/
+.features .features-image {
+  position: relative;
+  min-height: 400px;
+}
+
+.features .features-image img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.features .features-item h4 {
+  font-size: 35px;
+  font-weight: 700;
+  margin: 0 0 5px 0;
+  color: #354410;
+}
+
+.features .features-item i {
+  font-size: 48px;
+  color: var(--nav-hover-color);
+  margin-right: 20px;
+  line-height: 0;
+}
+
+.features .features-item p {
+  font-size: 15px;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  margin: 0;
+}
+
+/*--------------------------------------------------------------
+# Call To Action Section
+--------------------------------------------------------------*/
+.call-to-action {
+  padding: 400px 0;
+  position: relative;
+  clip-path: inset(0);
+}
+
+.call-to-action img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.call-to-action:before {
+  content: "";
+  background: color-mix(in srgb, var(--background-color), transparent 80%);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.call-to-action .container {
+  position: relative;
+  z-index: 3;
+}
+
+.difficulty-section,
+.question-section,
+.options-section {
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.difficulty-section h3 {
+  font-size: 50px;
+  transition: color 0.3s ease; /* Smooth transition */
+  text-align: center; /* Ensures text alignment */
+}
+
+.difficulty-section:hover h3{
+  color: #8be591;
+}
+
+#difficulty-selector {
+  width: 100%; /* Full width */
+  padding: 10px; /* Add padding */
+  font-size: 30px; /* Adjust font size */
+  padding-left: 100px;
+  border-radius: 5px; /* Rounded corners */
+  background-color: #edf4ed; /* Background color */
+  color: var(--default-color); /* Text color */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+  appearance: none; /* Remove default arrow styles for consistency */
+  font-family: 'Dancing Script', cursive;
+  outline: none; /* Remove default focus outline */
+}
+
+#difficulty-selector:focus {
+  border-color: #edf4ed; /* Border color on focus */
+  box-shadow: 0 0 5px #edf4ed; /* Highlight effect on focus */
+  background-color: #edf4ed; /* Maintain the same background */
+  color: var(--default-color); /* Maintain text color */
+}
+
+#difficulty-selector option {
+  color: var(--default-color); /* Text color for options */
+  background-color: #edf4ed; /* Background for dropdown options */
+}
+
+#difficulty-selector:active {
+  background-color: #edf4ed; /* Override active background */
+  color: var(--default-color); /* Maintain text color */
+}
+
+button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #218838;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: white;
+}
+
+#question-text {
+  font-size: 50px;
+  color: white;
+  margin-bottom: 20px;
+  text-align: center; /* Ensures text alignment */
+}
+
+#options-container {
+  margin-top: 10px;
+  display: flex; /* Enables flexbox for alignment */
+  justify-content: center; /* Centers items horizontally */
+  align-items: center; /* Centers items vertically */
+  height: 100%; /* Ensures full height of container */
+  position: relative; /* Ensures "No" button is contained within its parent */
+  height: 150px; /* Adjust height as needed */
+}
+
+.option-button {
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: #620764;
+  color: white;
+  /* padding: 10px; */
+  border-radius: 4px;
+  /* cursor: pointer; */
+  padding: 10px 20px; /* Add padding for a better look */
+  font-size: 18px; /* Increase font size */
+  font-family: 'Dancing Script', cursive; /* Custom font */
+  cursor: pointer; /* Add a pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition */
+}
+
+#option-yes {
+  background-color: #28a745; /* Green background */
+  color: white; /* White text */
+  position: relative; /* Static button, doesn't move */
+  transition: all 0.3s ease; /* Add a smooth transition for hover effects */
+}
+
+#option-yes:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+#option-no {
+  background-color: #dc3545; /* Red background */
+  color: white; /* White text */
+  transition: all 0.3s ease; /* Smooth transition for better UX */
+  position: relative; /* Initially positioned relative to its container */
+  z-index: 10; /* Ensure it stays on top when moving */
+
+}
+
+#option-no:hover {
+  background-color: #c82333; /* Darker red on hover */
+  transform: scale(1.05); /* Slightly enlarge on hover */
+}
+
+.option-button:hover {
+  background-color: #620764;
+}
+
+/*--------------------------------------------------------------
+# Team Section
+--------------------------------------------------------------*/
+
+.team .container h3 {
+  font-size: 75px;
+  font-weight: 700;
+  color: #354410;
+}
+
+.team .team-member {
+  background-color: var(--surface-color);
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.team .team-member .member-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.team .team-member .social {
+  position: absolute;
+  left: 0;
+  bottom: 30px;
+  right: 0;
+  opacity: 0;
+  transition: ease-in-out 0.3s;
+  text-align: center;
+}
+
+.team .team-member .social a {
+  background: color-mix(in srgb, var(--contrast-color), transparent 25%);
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  margin: 0 3px;
+  border-radius: 4px;
+  width: 36px;
+  height: 36px;
+  transition: ease-in-out 0.3s;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.team .team-member .social a:hover {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+}
+
+.team .team-member .social i {
+  font-size: 18px;
+  line-height: 0;
+}
+
+.team .team-member .member-info {
+  padding: 25px 15px;
+}
+
+.team .team-member .member-info h4 {
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 30px;
+  color: color-mix(in srgb, #202c02, transparent 40%);
+}
+
+.team .team-member .member-info span {
+  display: block;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: "Dancing Script", cursive; /* Replace with desired font */
+  font-style: italic; /* Optional: Make it italic */
+  color: color-mix(in srgb, #23043e, transparent 40%);
+}
+
+.team .team-member:hover .social {
+  opacity: 1;
+  bottom: 15px;
+}
+
+/*--------------------------------------------------------------
+# Contact Section
+--------------------------------------------------------------*/
+.contact .info-item+.info-item {
+  margin-top: 40px;
+}
+
+.contact .container h3 {
+  font-size: 75px;
+  font-weight: 700;
+  color: #354410;
+}
+
+.contact .info-item i {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  font-size: 20px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+  margin-right: 15px;
+}
+
+.contact .info-item h3 {
+  padding: 0;
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.contact .info-item p {
+  padding: 0;
+  margin-bottom: 0;
+  font-size: 14px;
+}
+
+.contact .php-email-form {
+  height: 100%;
+}
+
+.contact .php-email-form input[type=text],
+.contact .php-email-form input[type=email],
+.contact .php-email-form textarea {
+  font-size: 14px;
+  padding: 10px 15px;
+  box-shadow: none;
+  border-radius: 0;
+  color: var(--default-color);
+  background-color: color-mix(in srgb, var(--background-color), transparent 50%);
+  border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+}
+
+.contact .php-email-form input[type=text]:focus,
+.contact .php-email-form input[type=email]:focus,
+.contact .php-email-form textarea:focus {
+  border-color: var(--accent-color);
+}
+
+.contact .php-email-form input[type=text]::placeholder,
+.contact .php-email-form input[type=email]::placeholder,
+.contact .php-email-form textarea::placeholder {
+  font-family: "Black Chancery", cursive; /* Replace with desired font */
+  font-size: 20px;
+  color: color-mix(in srgb, var(--default-color), transparent 70%);
+}
+
+.contact .php-email-form button[type=submit] {
+  font-family: "Black Chancery", cursive; /* Replace with desired font */
+  font-size: 20px;
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  border: 0;
+  padding: 10px 30px;
+  transition: 0.4s;
+  border-radius: 4px;
+}
+
+.contact .php-email-form button[type=submit]:hover {
+  background: color-mix(in srgb, var(--accent-color), transparent 20%);
+}
+
+
+/* Styles for the quiz options */
+
+.section-header h2 {
+  font-size: 50px;
+  font-weight: 500;
+  padding: 50px;
+  line-height: 1px;
+  letter-spacing: 1.5px;
+}
+
+.intro-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 25px;
+  color: #000000;
+}
+
+.btn {
+  font-family: 'Black Chancery', cursive;
+  font-size: 20px;  /* Adjust the font size as needed */
+  color: rgb(0, 0, 0);
+  border-color: #000000;
+}
+
+.selected {
+  background-color: #f0f8ff; /* Light blue for the selected answer */
+  border-color: #007bff;
+}
+
+.correct {
+  background-color: #28a745; /* Green for the correct answer */
+  border-color: #155724;
+  color: white;
+}
+
+.incorrect {
+  background-color: #dc3545; /* Red for the incorrect answer */
+  border-color: #721c24;
+  color: white;
+}
+
+/* Style for the buttons */
+button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 2px solid #ccc;
+}
+
+button:hover {
+  background-color: #f8f9fa;
+}
+
+/* Style for the quiz container */
+
+/* The quiz content can have a slight opacity to contrast with the background */
+#quiz-content {
+  background-color: rgba(255, 255, 255, 0.9); /* Transparent white */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: none;
+  text-align: center;
+}
+
+.quiz-section {
+  padding: 100px 0;
+  position: relative;
+  clip-path: inset(0);
+}
+
+.quiz-section img {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  filter: brightness(50%) blur(2px);
+}
+
+.quiz-section:before {
+  content: "";
+  background: color-mix(in srgb, var(--background-color), transparent 80%);
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.quiz-section .container {
+  position: relative;
+  z-index: 3;
+}
+
+#scorecard {
+  display: none;
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
+
+#scorecard h3{
+  color: rgb(0, 0, 0);
+  font-size: 50px;
+  font-weight: bold;
+}
+
+/* Container for each question */
+.question-container {
+  margin-bottom: 20px;
+}
+
+.question-container h4 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+/* Style for the difficulty display */
+#difficulty-display {
+  font-family: 'Black Chancery', cursive;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+  color: #000;
+}
+
+#selected-difficulty {
+  font-family: 'Black Chancery', cursive;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+label[for="numQuestions"] {
+  font-family: 'Black Chancery', cursive;
+  font-size: 20px;
+  color: #000;
+}
+
+/* Add some spacing between the options */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Style for the score display */
+#score {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Style for the restart button */
+#restart-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#restart-btn:hover {
+  background-color: #0056b3;
+}
