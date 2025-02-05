@@ -1,19 +1,16 @@
-from flask import Flask, jsonify, request, send_from_directory, session
+from flask import Flask, jsonify, request, session
 from random import choice, sample
 from collections import OrderedDict
 import json
-import logging
 from flask_session import Session  # Import Flask-Session
 import psycopg2
 from psycopg2 import sql
 from flask_cors import CORS
+from flask import Flask, send_from_directory
 import os
 from flask_sqlalchemy import SQLAlchemy
 
 from urllib.parse import urlparse
-
-# Configure logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__, static_folder='Front_end', static_url_path='')
 app.secret_key = 'your_secret_key'  # Secret key for sessions
