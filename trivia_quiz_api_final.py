@@ -1,16 +1,19 @@
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request, send_from_directory, session
 from random import choice, sample
 from collections import OrderedDict
 import json
+import logging
 from flask_session import Session  # Import Flask-Session
 import psycopg2
 from psycopg2 import sql
 from flask_cors import CORS
-from flask import Flask, send_from_directory
 import os
 from flask_sqlalchemy import SQLAlchemy
 
 from urllib.parse import urlparse
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 app = Flask(__name__, static_folder='Front_end', static_url_path='')
 app.secret_key = 'your_secret_key'  # Secret key for sessions
@@ -24,24 +27,13 @@ Session(app)  # Initialize Flask-Session
 # Database connection function
 def get_db_connection():
     conn = psycopg2.connect(
-        dbname="Trivia", 
+        database="trivia_db", 
         user="postgres", 
         password="password", 
         host="db", 
         port="5432"
     )
     return conn
-
-DB_HOST = "triviadb.cf8ukqkga47d.ap-south-2.rds.amazonaws.com"
-DB_NAME = "triviadb"
-DB_USER = "triviaquiz"
-DB_PASS = "Triviaquiz"
-
-app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{DB_USER}:{DB_PASS}@{DB_HOST}/{DB_NAME}"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-db = SQLAlchemy(app)
-
 
 # Function to fetch questions from the database
 def get_questions(difficulty):

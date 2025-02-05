@@ -1,0 +1,17 @@
+# Use the official PostgreSQL image as the base image
+FROM postgres:latest
+
+# Set environment variables (optional)
+ENV POSTGRES_USER=postgres
+ENV POSTGRES_PASSWORD=password
+ENV POSTGRES_DB=trivia_db
+
+# Copy the SQL backup file to the container
+COPY trivia_backup.sql /docker-entrypoint-initdb.d/
+
+# Expose the default PostgreSQL port
+EXPOSE 5432
+
+RUN apt-get update && apt-get install -y postgresql-client
+
+CMD ["postgres"] 
