@@ -1,5 +1,5 @@
 // Base URL for the trivia API
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "http://40.192.6.204:5000/api";
 
 let currentQuestionIndex = 0;
 let numQuestions = 5;

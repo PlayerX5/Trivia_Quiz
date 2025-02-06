@@ -216,6 +216,6 @@ def quiz():
     return send_from_directory('Front_end', 'quiz.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
 # Connected with the database.
